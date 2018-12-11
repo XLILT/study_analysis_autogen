@@ -14,8 +14,13 @@ def get_gen_rule(file):
     rule_sht = wb.sheet_by_index(0)
     greet_sht = wb.sheet_by_index(1)
 
-    for row_idx in range(rule_sht.nrows):
-        trans_rule[rule_sht.cell_value(row_idx, 0)] = rule_sht.cell_value(row_idx, 1)
+    for row_idx in range(rule_sht.nrows):        
+        idx = rule_sht.cell_value(row_idx, 0)
+        if rule_sht.cell_type(row_idx, 0) == 2:
+            idx = int(idx)
+
+        #print(str(idx))
+        trans_rule[str(idx)] = rule_sht.cell_value(row_idx, 1)
 
     for row_idx in range(greet_sht.nrows):
         greet_arr.append(greet_sht.cell_value(row_idx, 0))
@@ -71,6 +76,8 @@ def translate_workbook_with_template(wb, temp):
             for col_idx in range(ncol):
                 tcell = tabl.cell_value(row_idx, col_idx)
                 if(row_idx >= 3 and col_idx == ncol - 1):
+                    if tabl.cell_type(row_idx, col_idx) == 2:
+                        tcell = str(int(tcell))
                     tcell = gen_study_analysis(tcell)
 
                 gtb.write(row_idx, col_idx, tcell)
