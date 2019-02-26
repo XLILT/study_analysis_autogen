@@ -87,7 +87,7 @@ def translate_workbook_with_template(wb, temp):
 def main():
     tfile = sys.argv[1]
     wb = translate_workbook_with_template(xlrd.open_workbook(tfile), {})
-    wb.save("tmp.xlsx")
+    wb.save("gen_" + tfile)
 
 
 if __name__ == "__main__":
